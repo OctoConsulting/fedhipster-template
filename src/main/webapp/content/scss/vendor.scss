@@ -1,0 +1,10 @@
+/* after changing this file run 'npm run webpack:build' */
+
+/***************************
+put Sass variables here:
+eg $input-color: red;
+****************************/
+// Override Boostrap variables
+@import '../uswds/stylesheets/uswds';
+
+/* jhipster-needle-scss-add-vendor JHipster will add new css style */

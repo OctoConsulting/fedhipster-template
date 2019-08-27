@@ -1,0 +1,17 @@
+<div class="modal-container">
+  <div
+    [hidden]="!isVisible"
+    role="dialog"
+    aria-labelledby="modal-heading-id"
+    aria-describedby="modal-description-id"
+    aria-modal="true"
+    aria-live="assertive"
+    class="sam-modal-basic"
+    (keydown.esc)="isVisible = false"
+  >
+    <div class="sam-modal-content" cdkTrapFocus>
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>
+

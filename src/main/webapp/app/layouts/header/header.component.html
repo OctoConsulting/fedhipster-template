@@ -1,0 +1,74 @@
+<div class="usa-overlay"></div>
+<header class="usa-header usa-header--extended" role="banner">
+    <div class="usa-navbar">
+        <div class="usa-logo" id="extended-logo">
+            <em class="usa-logo__text"><a href="/" title="Home" aria-label="Home">Project title</a></em>
+        </div>
+        <button class="usa-menu-btn">Menu</button>
+    </div>
+    <nav role="navigation" class="usa-nav">
+        <div class="usa-nav__inner">
+            <button class="usa-nav__close"><img src="/assets/img/close.svg" alt="close"></button>
+            <ul class="usa-nav__primary usa-accordion">
+                <li class="usa-nav__primary-item">
+                    <button class="usa-accordion__button usa-nav__link  usa-current" aria-expanded="false"
+                            aria-controls="extended-nav-section-one"><span>Section</span></button>
+                    <ul id="extended-nav-section-one" class="usa-nav__submenu" hidden>
+                        <!--<li class="usa-nav__submenu-item">
+                            <a href="#">Navigation link</a>
+                        </li>-->
+                        <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
+                    </ul>
+                </li>
+                <li class="usa-nav__primary-item">
+                    <button *jhiHasAnyAuthority="'ROLE_ADMIN'" class="usa-accordion__button usa-nav__link"
+                            aria-expanded="false" aria-controls="extended-nav-section-two"><span>Admin</span></button>
+                    <ul *jhiHasAnyAuthority="'ROLE_ADMIN'" id="extended-nav-section-two" class="usa-nav__submenu" hidden>
+                        <li class="usa-nav__submenu-item">
+                            <a routerLink="admin/gateway">Gateway</a>
+                        </li>
+                        <li class="usa-nav__submenu-item">
+                            <a routerLink="admin/jhi-metrics">Metrics</a>
+                        </li>
+                        <li class="usa-nav__submenu-item">
+                            <a routerLink="admin/jhi-health">Health</a>
+                        </li>
+                        <li class="usa-nav__submenu-item">
+                            <a routerLink="admin/jhi-configuration">Configuration</a>
+                        </li>
+                        <li class="usa-nav__submenu-item">
+                            <a routerLink="admin/audits">Audits</a>
+                        </li>
+                        <li class="usa-nav__submenu-item">
+                            <a routerLink="admin/logs">Logs</a>
+                        </li>
+                        <li class="usa-nav__submenu-item">
+                            <a routerLink="admin/docs">API</a>
+                        </li>
+                    </ul>
+                    <div class="usa-nav__secondary">
+                        <ul class="usa-nav__secondary-links" *ngIf="!isAuthenticated()">
+                            <li class="usa-nav__secondary-item">
+                                <a class="usa-button usa-button--unstyled" (click)="login()">Sign in</a>
+                            </li>
+                        </ul>
+                        <ul class="usa-nav__secondary-links" *ngIf="isAuthenticated()">
+                            <li class="usa-nav__secondary-item">
+                                <a class="usa-button usa-button--unstyled" (click)="logout()">Sign out</a>
+                            </li>
+                        </ul>
+                        <form class="usa-search usa-search--small ">
+                            <div role="search">
+                                <label class="usa-sr-only" for="extended-search-field-small">Search small</label>
+                                <input class="usa-input" id="extended-search-field-small" type="search" name="search">
+                                <button class="usa-button" type="submit" style="background-color: #005ea2">
+                                    <span class="usa-sr-only">Search</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
