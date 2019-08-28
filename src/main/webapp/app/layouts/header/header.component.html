@@ -45,6 +45,9 @@
                         <li class="usa-nav__submenu-item">
                             <a routerLink="admin/docs">API</a>
                         </li>
+                        <li class="usa-nav__submenu-item">
+                            <a [attr.href]="userManagementUrl()" target="_blank">User Management</a>
+                        </li>
                     </ul>
                     <div class="usa-nav__secondary">
                         <ul class="usa-nav__secondary-links" *ngIf="!isAuthenticated()">

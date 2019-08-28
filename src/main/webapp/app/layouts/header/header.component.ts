@@ -5,6 +5,7 @@ import {} from 'ng-fedhipster';
 import { VERSION } from 'app/app.constants';
 import { AccountService, LoginService } from 'app/core';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'jhi-header',
@@ -22,7 +23,8 @@ export class HeaderComponent implements OnInit {
     private loginService: LoginService,
     private accountService: AccountService,
     private profileService: ProfileService,
-    private router: Router
+    private router: Router,
+    private sanitzer: DomSanitizer
   ) {
     this.version = VERSION ? 'v' + VERSION : '';
   }
@@ -45,5 +47,9 @@ export class HeaderComponent implements OnInit {
   logout() {
     this.loginService.logout();
     this.router.navigate(['']);
+  }
+
+  userManagementUrl() {
+    return this.sanitzer.bypassSecurityTrustUrl('http://' + window.location.hostname + ':9080');
   }
 }
