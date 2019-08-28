@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+component: ci
+spec:
+  serviceAccountName: default
+  containers:
+  - name: maven
+    image: maven:3.6.1-jdk-11-slim
+    command:
+    - cat
+    tty: true
+    resources:
+      limits:
+        memory: "4Gi"
+  - name: docker
+    image: docker:dind
+    securityContext:
+      privileged: true
+    command:
+    - cat
+    tty: true
+  - name: owasp
+    image: owasp/zap2docker-stable:latest
+    securityContext:
+      privileged: true
+    command:
+    - cat
+    tty: true
+    volumeMounts:
+    - name: zap-report-volume
+      mountPath: /zap/wrk/
+      readOnly: false
+  - name: kubectl
+    image: gcr.io/cloud-builders/kubectl
+    command:
+    - cat
+    tty: true
+  - name: selenium
+    image: markhobson/maven-chrome
+    securityContext:
+      privileged: true
+    command:
+    - cat
+    tty: true
+  - name: jmeter
+    image: egaillardon/jmeter
+    securityContext:
+      privileged: true
+    command:
+    - cat
+    tty: true
+  volumes:
+  - name: zap-report-volume
+    emptyDir: {}
