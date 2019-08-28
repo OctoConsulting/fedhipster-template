@@ -9,7 +9,7 @@ spring:
   ...
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://localhost:5432/comet
+    url: jdbc:postgresql://localhost:5432/app
     username: app
     password:
 ```
