@@ -18,7 +18,7 @@ public class UserRoleSteps {
 	}
 
 
-	@Then("^user is presented with links to add dossier, data source, and load buld data$")
+	@Then("^user is presented with links to Gateway, Health, Metrics and API.$")
 	public void user_is_presented_with_links_to_add_dossier_data_source_and_load_buld_data() {
 		assertThat(homePage.verifyAdminFeatures(),is(true));
 	}

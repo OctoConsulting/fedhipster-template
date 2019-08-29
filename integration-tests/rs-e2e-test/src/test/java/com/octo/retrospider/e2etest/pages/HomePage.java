@@ -12,7 +12,8 @@ public class HomePage extends PageObject {
 	@FindBy(className="usa-button")
 	private WebElementFacade login;
 	
-	@FindBy(linkText="Logout")
+	//@FindBy(linkText="Logout")
+	@FindBy(linkText="Sign out")
 	private WebElementFacade logout;
 	
 	@FindBy(id="username")
@@ -27,14 +28,29 @@ public class HomePage extends PageObject {
 	@FindBy(className="kc-feedback-text")
 	private WebElementFacade failedLoginAlert;
 	
-	@FindBy(linkText="Add Dossier")
-	private WebElementFacade addDossierLink;
+//	@FindBy(linkText="Add Dossier")
+//	private WebElementFacade addDossierLink;
+//	
+//	@FindBy(linkText="Add Data Source")
+//	private WebElementFacade addDataSrcLink;
+//	
+//	@FindBy(linkText="Bulk Load Data")
+//	private WebElementFacade bulkDataLoadLink;
+//	
+	@FindBy(linkText="Gateway")
+	private WebElementFacade gatewayLink;
 	
-	@FindBy(linkText="Add Data Source")
-	private WebElementFacade addDataSrcLink;
+	@FindBy(linkText="Metrics")
+	private WebElementFacade metricsLink;
 	
-	@FindBy(linkText="Bulk Load Data")
-	private WebElementFacade bulkDataLoadLink;
+	@FindBy(linkText="Health")
+	private WebElementFacade healthLink;
+	
+	@FindBy(linkText="API")
+	private WebElementFacade apiLink;
+	
+	@FindBy(className="usa-accordion__button")
+	private WebElementFacade adminButton;
 	
 	public void login(String user, String pass) {
 		login.click();
@@ -52,9 +68,13 @@ public class HomePage extends PageObject {
 	}
 	
 	public boolean verifyAdminFeatures() {
-		return (addDossierLink.withTimeoutOf(timeout,TimeUnit.SECONDS).waitUntilEnabled().isEnabled() && 
-				addDataSrcLink.withTimeoutOf(timeout,TimeUnit.SECONDS).waitUntilEnabled().isEnabled() && 
-				bulkDataLoadLink.withTimeoutOf(timeout,TimeUnit.SECONDS).waitUntilEnabled().isEnabled());
+		
+		return adminButton.withTimeoutOf(timeout,TimeUnit.SECONDS).waitUntilEnabled().isEnabled();
+				
+//				(gatewayLink.withTimeoutOf(timeout,TimeUnit.SECONDS).waitUntilEnabled().isEnabled() && 
+//				metricsLink.withTimeoutOf(timeout,TimeUnit.SECONDS).waitUntilEnabled().isEnabled() && 
+//				healthLink.withTimeoutOf(timeout,TimeUnit.SECONDS).waitUntilEnabled().isEnabled() &&
+//				apiLink.withTimeoutOf(timeout,TimeUnit.SECONDS).waitUntilEnabled().isEnabled());
 	}
 
 }
