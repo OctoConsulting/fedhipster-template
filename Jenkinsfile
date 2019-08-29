@@ -21,7 +21,7 @@ pipeline {
                   else echo "dev"
                   fi
                 ''').toLowerCase().trim()
-    APP_URL = "http://${DEPLOYMENT_NAME}.${NAMESPACE}.svc.cluster.local:8080"
+    APP_URL = "http://${DEPLOYMENT_NAME}.${NAMESPACE}.svc.cluster.local:80"
     SONAR_URL = "http://cicd-sonarqube.default.svc.cluster.local:9000"
   }
   stages {
@@ -119,7 +119,7 @@ pipeline {
               sh '''
                 APP_ELB=`cat app-elb.txt`
                 cd integration-tests/rs-e2e-test
-                mvn verify -Dwebdriver.base.url=http://${APP_ELB}:8080/ || return_code=$?
+                mvn verify -Dwebdriver.base.url=http://${APP_ELB}:80/ || return_code=$?
                 echo "exit value was  - " $return_code
               '''
               publishHTML target: [
