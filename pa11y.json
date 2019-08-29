@@ -1,0 +1,10 @@
+{
+  "defaults": {
+    "standard": "Section508", 
+    "chromeLaunchConfig": {
+      "args": [
+        "--no-sandbox"
+      ]
+    }
+  }
+}
