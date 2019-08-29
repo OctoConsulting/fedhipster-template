@@ -24,12 +24,12 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="APP_URL_1" elementType="Argument">
             <stringProp name="Argument.name">APP_URL_1</stringProp>
-            <stringProp name="Argument.value">localhost</stringProp>
+            <stringProp name="Argument.value">${__P(AppUR)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="BASE_URL_1" elementType="Argument">
             <stringProp name="Argument.name">BASE_URL_1</stringProp>
-            <stringProp name="Argument.value">localhost</stringProp>
+            <stringProp name="Argument.value">${__P(KcURL)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -55,7 +55,6 @@
         <collectionProp name="DNSCacheManager.servers"/>
         <boolProp name="DNSCacheManager.clearEachIteration">true</boolProp>
         <boolProp name="DNSCacheManager.isCustomResolver">false</boolProp>
-        <collectionProp name="DNSCacheManager.hosts"/>
       </DNSCacheManager>
       <hashTree/>
       <AuthManager guiclass="AuthPanel" testclass="AuthManager" testname="HTTP Authorization Manager" enabled="true">
