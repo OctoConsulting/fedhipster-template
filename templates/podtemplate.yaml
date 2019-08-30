@@ -60,4 +60,4 @@ spec:
     emptyDir: {}
   - name: maven-repo
     persistentVolumeClaim:
-      claimName: maven-repo-pvc
+      claimName: maven-pod-pvc
