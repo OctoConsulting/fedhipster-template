@@ -12,9 +12,9 @@ spec:
     - cat
     tty: true
     volumeMounts:
-      - mountPath: "/root/.m2/repository"
-        name: maven-repo
-        readOnly: false
+    - mountPath: "/root/.m2/repository"
+      name: maven-repo
+      readOnly: false
     resources:
       limits:
         memory: "4Gi"
