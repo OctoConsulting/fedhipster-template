@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  labels: pipeline-slave
+  labels: 
 component: ci
 spec:
   serviceAccountName: default
