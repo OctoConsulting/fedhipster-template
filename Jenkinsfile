@@ -36,7 +36,7 @@ pipeline {
           sh '''
             apt-get update && apt-get install nodejs -y
             MAVEN_OPTS="$MAVEN_OPTS XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=2"
-            mvn -Pprod verify -DskipITs sonar:sonar \
+            mvn -Pprod verify sonar:sonar \
               -Dsonar.host.url=$SONAR_URL \
               -Dsonar.projectKey=app-${NAMESPACE} \
               -Dsonar.projectName=app-${NAMESPACE}
