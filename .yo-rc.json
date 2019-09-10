@@ -1,7 +1,8 @@
 {
   "generator-fedhipster": {
     "promptValues": {
-      "packageName": "com.octo.app"
+      "packageName": "com.octo.app",
+      "microservicePath": "../../RDSO-DS-MS"
     },
     "jhipsterVersion": "6.0.16",
     "applicationType": "gateway",
