@@ -1,13 +1,13 @@
 pipeline {
   agent {
     kubernetes {
-      label 'pipeline-slave'
+      label 'app-slave'
       defaultContainer 'jnlp'
       yamlFile 'templates/podtemplate.yaml'
     }
   }
   environment {
-    APP_NAME = "app-image"
+    APP_NAME = "app"
     IMAGE_VERSION = "$BUILD_NUMBER"
     DEPLOYMENT_NAME = "app"
     CONTAINER_NAME = "app"
@@ -15,31 +15,31 @@ pipeline {
                 returnStdout: true,
                 script: '''
                   GIT_BRANCH=$(git symbolic-ref --short HEAD)
-                  if   [ ${GIT_BRANCH:0:3} = dev ]; then echo "dev"
+                  if   [ ${GIT_BRANCH} = dev ];     then echo "dev"
                   elif [ ${GIT_BRANCH} = stage ];   then echo "stage"
                   elif [ ${GIT_BRANCH} = master ];  then echo "prod"
                   else echo "dev"
                   fi
                 ''').toLowerCase().trim()
-    APP_URL = "http://${DEPLOYMENT_NAME}.${NAMESPACE}.svc.cluster.local:80"
-    SONAR_URL = "http://cicd-sonarqube.default.svc.cluster.local:9000"
+    APP_URL = "http://${DEPLOYMENT_NAME}.${NAMESPACE}:80"
+    SONAR_URL = "http://cicd-sonarqube.default:80"
   }
   stages {
     stage('Setup') {
       steps{
         container('docker'){ sh 'dockerd &> dockerd-logfile &' }
+        container('maven'){ sh 'apt-get update && apt-get install nodejs -y' }
       }
     }
     stage('Build & Test') {
       steps{
         container('maven'){
           sh '''
-            apt-get update && apt-get install nodejs -y
             MAVEN_OPTS="$MAVEN_OPTS XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=2"
             mvn -Pprod verify sonar:sonar \
               -Dsonar.host.url=$SONAR_URL \
-              -Dsonar.projectKey=app-${NAMESPACE} \
-              -Dsonar.projectName=app-${NAMESPACE}
+              -Dsonar.projectKey=${APP_NAME}-${NAMESPACE} \
+              -Dsonar.projectName=${APP_NAME}-${NAMESPACE}
           '''
         }
       }
@@ -77,7 +77,7 @@ pipeline {
       }
     }
     stage('Post') {
-      when { expression { (env.NAMESPACE == "dev") || (env.NAMESPACE == "stage") } }
+      when { expression { (env.NAMESPACE == "stage") } }
       parallel {
         stage('508 Test') {
           when { expression { env.NAMESPACE == "stage" } }
