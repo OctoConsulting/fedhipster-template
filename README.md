@@ -24,7 +24,7 @@ docker-compose -f src/main/docker/postgresql.yml up
 docker-compose -f src/main/docker/jhipster-registry.yml up
 ```
 
-If you chose to use a locally running database you can ignore
+If you chose to use a locally running database you can skip running the postgres container
 
 ## Running the application
 

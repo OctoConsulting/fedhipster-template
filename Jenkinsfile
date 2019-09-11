@@ -1,13 +1,13 @@
 pipeline {
   agent {
     kubernetes {
-      label 'pipeline-slave'
+      label 'app-slave'
       defaultContainer 'jnlp'
       yamlFile 'templates/podtemplate.yaml'
     }
   }
   environment {
-    APP_NAME = "app-image"
+    APP_NAME = "app"
     IMAGE_VERSION = "$BUILD_NUMBER"
     DEPLOYMENT_NAME = "app"
     CONTAINER_NAME = "app"
@@ -15,31 +15,31 @@ pipeline {
                 returnStdout: true,
                 script: '''
                   GIT_BRANCH=$(git symbolic-ref --short HEAD)
-                  if   [ ${GIT_BRANCH:0:3} = dev ]; then echo "dev"
+                  if   [ ${GIT_BRANCH} = dev ];     then echo "dev"
                   elif [ ${GIT_BRANCH} = stage ];   then echo "stage"
                   elif [ ${GIT_BRANCH} = master ];  then echo "prod"
                   else echo "dev"
                   fi
                 ''').toLowerCase().trim()
-    APP_URL = "http://${DEPLOYMENT_NAME}.${NAMESPACE}.svc.cluster.local:80"
-    SONAR_URL = "http://cicd-sonarqube.default.svc.cluster.local:9000"
+    APP_URL = "http://${DEPLOYMENT_NAME}.${NAMESPACE}:80"
+    SONAR_URL = "http://cicd-sonarqube.default:80"
   }
   stages {
     stage('Setup') {
       steps{
         container('docker'){ sh 'dockerd &> dockerd-logfile &' }
+        container('maven'){ sh 'apt-get update && apt-get install nodejs -y' }  
       }
     }
     stage('Build & Test') {
       steps{
         container('maven'){
           sh '''
-            apt-get update && apt-get install nodejs -y
             MAVEN_OPTS="$MAVEN_OPTS XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=2"
-            mvn -Pprod verify -DskipITs sonar:sonar \
+            mvn -Pprod verify sonar:sonar \
               -Dsonar.host.url=$SONAR_URL \
-              -Dsonar.projectKey=app-${NAMESPACE} \
-              -Dsonar.projectName=app-${NAMESPACE}
+              -Dsonar.projectKey=${APP_NAME}-${NAMESPACE} \
+              -Dsonar.projectName=${APP_NAME}-${NAMESPACE}
           '''
         }
       }
@@ -52,9 +52,17 @@ pipeline {
             docker build -t $APP_NAME:latest -t $APP_NAME:$IMAGE_VERSION src/main/docker/.
           '''
           script {
-            docker.withRegistry('https://$IMAGE_REPO', 'ecr:us-east-1:eks-keys') {
-              docker.image('$APP_NAME').push('$NAMESPACE-$IMAGE_VERSION')
-              docker.image('$APP_NAME').push('$NAMESPACE-latest')
+            if (env.AWS_REGION == "us-east-1"){
+              docker.withRegistry('https://$IMAGE_REPO', 'ecr:us-east-1:eks-keys') {
+                docker.image('$APP_NAME').push('$NAMESPACE-$IMAGE_VERSION')
+                docker.image('$APP_NAME').push('$NAMESPACE-latest')
+              }
+            }
+            if (env.AWS_REGION == "us-east-2"){
+              docker.withRegistry('https://$IMAGE_REPO', 'ecr:us-east-2:eks-keys') {
+                docker.image('$APP_NAME').push('$NAMESPACE-$IMAGE_VERSION')
+                docker.image('$APP_NAME').push('$NAMESPACE-latest')
+              }
             }
           }
         }
@@ -91,7 +99,8 @@ pipeline {
                 pa11y-ci -c pa11y.json --json http://${APP_ELB}:80 | tee pa11y-ci-results.json
                 pa11y-ci-reporter-html -d pa11y-html
               '''
-              publishHTML target: [allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true,
+              publishHTML target: [
+                allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true,
                 reportDir: 'pa11y-html',
                 reportFiles: 'index.html',
                 reportName: "508 Test"
