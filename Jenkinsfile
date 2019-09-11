@@ -53,13 +53,13 @@ pipeline {
           '''
           script {
             if (env.AWS_REGION == "us-east-1"){
-              docker.withRegistry('https://$ECR_REPO', 'ecr:us-east-1:aws-keys') {
+              docker.withRegistry('https://$ECR_REPO', 'ecr:us-east-1:eks-keys') {
                 docker.image('$APP_NAME').push('$NAMESPACE-$IMAGE_VERSION')
                 docker.image('$APP_NAME').push('$NAMESPACE-latest')
               }
             }
             if (env.AWS_REGION == "us-east-2"){
-              docker.withRegistry('https://$ECR_REPO', 'ecr:us-east-2:aws-keys') {
+              docker.withRegistry('https://$ECR_REPO', 'ecr:us-east-2:eks-keys') {
                 docker.image('$APP_NAME').push('$NAMESPACE-$IMAGE_VERSION')
                 docker.image('$APP_NAME').push('$NAMESPACE-latest')
               }
