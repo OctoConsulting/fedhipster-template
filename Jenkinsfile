@@ -85,7 +85,7 @@ pipeline {
       }
     }
     stage('Post') {
-      when { expression { (env.NAMESPACE == "dev") || (env.NAMESPACE == "stage") } }
+      when { expression { (env.NAMESPACE == "stage") } }
       parallel {
         stage('508 Test') {
           when { expression { env.NAMESPACE == "stage" } }
