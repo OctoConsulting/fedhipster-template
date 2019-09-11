@@ -11,10 +11,6 @@ spec:
     command:
     - cat
     tty: true
-    volumeMounts:
-    - mountPath: "/root/.m2/repository"
-      name: maven-repo
-      readOnly: false
     resources:
       limits:
         memory: "4Gi"
@@ -58,6 +54,4 @@ spec:
   volumes:
   - name: zap-report-volume
     emptyDir: {}
-  - name: maven-repo
-    persistentVolumeClaim:
-      claimName: maven-pod-pvc
+
