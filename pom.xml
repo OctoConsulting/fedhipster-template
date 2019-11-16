@@ -821,6 +821,29 @@
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>${spring-boot.version}</version>
                 </plugin>
+                <plugin>
+				    <groupId>org.pitest</groupId>
+				    <artifactId>pitest-maven</artifactId>
+				    <version>LATEST</version>
+				    <dependencies>
+			          <dependency>
+			            <groupId>org.pitest</groupId>
+			            <artifactId>pitest-junit5-plugin</artifactId>
+			            <version>LATEST</version>
+			          </dependency>
+			        </dependencies>
+				    <configuration>
+					    <mutators>
+					        <mutator>ALL</mutator>
+					    </mutators>
+				        <targetClasses>
+				            <param>com.octo.app.*</param>
+				        </targetClasses>
+				        <targetTests>
+				            <param>com.octo.app.*</param>
+				        </targetTests>
+    				</configuration>
+				</plugin>
             </plugins>
         </pluginManagement>
     </build>
