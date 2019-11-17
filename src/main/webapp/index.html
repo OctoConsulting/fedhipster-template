@@ -11,9 +11,22 @@
     <link rel="shortcut icon" href="favicon.ico" />
     <link rel="manifest" href="manifest.webapp" />
     <link rel="stylesheet" href="content/css/loading.css">
+    <script type="text/javascript">
+        var _paq = window._paq || [];
+        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function() {
+            var u="//100.27.49.180/";
+            _paq.push(['setTrackerUrl', u+'matomo.php']);
+            _paq.push(['setSiteId', '1']);
+            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+            g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+        })();
+    </script>
     <!-- jhipster-needle-add-resources-to-root - JHipster will add new resources here -->
 </head>
-<body>
+<body style="position: relative">
     <!--[if lt IE 9]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -84,6 +97,15 @@
         }
     </script>
     <script src="content/js/uswds.min.js"></script>
+    <script src="https://ashlibot-codebuilddeploy-zem82jh5r66-webappbucket-kjgdmx7n44b5.s3.amazonaws.com/lex-web-ui-loader.min.js"></script>
+    <script>
+        var loaderOpts = {
+            baseUrl: 'https://ashlibot-codebuilddeploy-zem82jh5r66-webappbucket-kjgdmx7n44b5.s3.amazonaws.com/'
+        };
+        var loader = new ChatBotUiLoader.IframeLoader(loaderOpts);
+        loader.load()
+            .catch(function (error) { console.error(error); });
+    </script>
     <!-- uncomment this for adding service worker
         <script>
             if ('serviceWorker' in navigator) {
@@ -105,5 +127,6 @@
         r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
         ga('create','UA-XXXXX-X');ga('send','pageview');
     </script>-->
+
 </body>
 </html>

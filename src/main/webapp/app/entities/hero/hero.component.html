@@ -1,7 +1,7 @@
 <div class="grid-container">
     <h2 id="page-heading">
         <span>Heroes</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-hero" [routerLink]="['/hero/new']">
+        <button id="jh-create-entity" class="usa-button float-right jh-create-entity create-hero" [routerLink]="['/hero/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span class="hidden-sm-down" >
             Create new Hero
@@ -72,13 +72,13 @@
                     <div class="btn-group">
                         <button type="submit"
                                 [routerLink]="['/hero', hero.id, 'view' ]"
-                                class="btn btn-info btn-sm">
+                                class="usa-button">
                             <fa-icon [icon]="'eye'"></fa-icon>
                             <span class="d-none d-md-inline">View</span>
                         </button>
                         <button type="submit"
                                 [routerLink]="['/hero', hero.id, 'edit']"
-                                class="btn btn-primary btn-sm">
+                                class="usa-button">
                             <fa-icon [icon]="'pencil-alt'"></fa-icon>
                             <span class="d-none d-md-inline">Edit</span>
                         </button>
@@ -86,7 +86,7 @@
                                 [routerLink]="['/', 'hero', { outlets: { popup: hero.id + '/delete'} }]"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
+                                class="usa-button usa-button--secondary">
                             <fa-icon [icon]="'times'"></fa-icon>
                             <span class="d-none d-md-inline">Delete</span>
                         </button>
