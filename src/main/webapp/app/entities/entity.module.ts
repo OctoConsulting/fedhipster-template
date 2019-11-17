@@ -11,6 +11,10 @@ import { RouterModule } from '@angular/router';
       {
         path: 'hero',
         loadChildren: './hero/hero.module#AppHeroModule'
+      },
+      {
+        path: 'hero',
+        loadChildren: './hero/hero.module#AppHeroModule'
       }
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ])

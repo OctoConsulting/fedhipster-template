@@ -1,4 +1,4 @@
-<div>
+<div class="grid-container">
     <h2 id="page-heading">
         <span>Heroes</span>
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-hero" [routerLink]="['/hero/new']">
@@ -25,48 +25,48 @@
         </div>
     </div>
     <br/>
-    <div class="table-responsive" *ngIf="heroes">
-        <table class="table table-striped">
+    <div class="table-responsive" style="overflow: scroll" *ngIf="heroes">
+        <table class="table table-striped usa-table">
             <thead>
-            <tr>
-            <th><span>ID</span></th>
-            <th><span>Name</span></th>
-            <th><span>Affilition</span></th>
-            <th><span>Eye Color</span></th>
-            <th><span>Hair Color</span></th>
-            <th><span>Gender</span></th>
-            <th><span>Status</span></th>
-            <th><span>Year</span></th>
-            <th><span>First Appearance</span></th>
-            <th><span>Universe</span></th>
-            <th><span>Intelligence</span></th>
-            <th><span>Strength</span></th>
-            <th><span>Speed</span></th>
-            <th><span>Durability</span></th>
-            <th><span>Power</span></th>
-            <th><span>Combat</span></th>
-            <th><span>Total</span></th>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <!--<th jhiSortBy="id"><span>ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
+            <th jhiSortBy="name"><span>Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="affilition"><span>Affiliation</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <!--<th jhiSortBy="eyeColor"><span>Eye Color</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
+            <!--<th jhiSortBy="hairColor"><span>Hair Color</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
+            <!--<th jhiSortBy="gender"><span>Gender</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
+            <!--<th jhiSortBy="status"><span>Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
+            <!--<th jhiSortBy="year"><span>Year</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
+            <!--<th jhiSortBy="firstAppearance"><span>First Appearance</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
+            <th jhiSortBy="universe"><span>Universe</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <!--<th jhiSortBy="intelligence"><span>Intelligence</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
+            <!--<th jhiSortBy="strength"><span>Strength</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
+            <!--<th jhiSortBy="speed"><span>Speed</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
+            <!--<th jhiSortBy="durability"><span>Durability</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
+            <!--<th jhiSortBy="power"><span>Power</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
+            <!--<th jhiSortBy="combat"><span>Combat</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
+            <th jhiSortBy="total"><span>Power Rank</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let hero of heroes ;trackBy: trackId">
-                <td><a [routerLink]="['/hero', hero.id, 'view' ]">{{hero.id}}</a></td>
+                <!--<td><a [routerLink]="['/hero', hero.id, 'view' ]">{{hero.id}}</a></td>-->
                 <td>{{hero.name}}</td>
                 <td>{{hero.affilition}}</td>
-                <td>{{hero.eyeColor}}</td>
-                <td>{{hero.hairColor}}</td>
-                <td>{{hero.gender}}</td>
-                <td>{{hero.status}}</td>
-                <td>{{hero.year}}</td>
-                <td>{{hero.firstAppearance}}</td>
+                <!--<td>{{hero.eyeColor}}</td>-->
+                <!--<td>{{hero.hairColor}}</td>-->
+                <!--<td>{{hero.gender}}</td>-->
+                <!--<td>{{hero.status}}</td>-->
+                <!--<td>{{hero.year}}</td>-->
+                <!--<td>{{hero.firstAppearance}}</td>-->
                 <td>{{hero.universe}}</td>
-                <td>{{hero.intelligence}}</td>
-                <td>{{hero.strength}}</td>
-                <td>{{hero.speed}}</td>
-                <td>{{hero.durability}}</td>
-                <td>{{hero.power}}</td>
-                <td>{{hero.combat}}</td>
+                <!--<td>{{hero.intelligence}}</td>-->
+                <!--<td>{{hero.strength}}</td>-->
+                <!--<td>{{hero.speed}}</td>-->
+                <!--<td>{{hero.durability}}</td>-->
+                <!--<td>{{hero.power}}</td>-->
+                <!--<td>{{hero.combat}}</td>-->
                 <td>{{hero.total}}</td>
                 <td class="text-right">
                     <div class="btn-group">
@@ -95,5 +95,13 @@
             </tr>
             </tbody>
         </table>
+    </div>
+    <div *ngIf="heroes && heroes.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
     </div>
 </div>

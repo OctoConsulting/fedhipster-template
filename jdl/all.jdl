@@ -16,3 +16,5 @@ entity Hero {
   combat Long,
   total Long,
 }
+
+paginate Hero with pagination

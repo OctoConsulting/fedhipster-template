@@ -70,7 +70,7 @@
     "changelogDate": "20191117205956",
     "entityTableName": "hero",
     "dto": "no",
-    "pagination": "no",
+    "pagination": "pagination",
     "service": "no",
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,

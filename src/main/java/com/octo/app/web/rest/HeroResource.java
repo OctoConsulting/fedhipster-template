@@ -6,10 +6,17 @@ import com.octo.app.repository.search.HeroSearchRepository;
 import com.octo.app.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
+import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -91,12 +98,15 @@ public class HeroResource {
     /**
      * {@code GET  /heroes} : get all the heroes.
      *
+     * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of heroes in body.
      */
     @GetMapping("/heroes")
-    public List<Hero> getAllHeroes() {
-        log.debug("REST request to get all Heroes");
-        return heroRepository.findAll();
+    public ResponseEntity<List<Hero>> getAllHeroes(Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
+        log.debug("REST request to get a page of Heroes");
+        Page<Hero> page = heroRepository.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**
@@ -131,14 +141,15 @@ public class HeroResource {
      * to the query.
      *
      * @param query the query of the hero search.
+     * @param pageable the pagination information.
      * @return the result of the search.
      */
     @GetMapping("/_search/heroes")
-    public List<Hero> searchHeroes(@RequestParam String query) {
-        log.debug("REST request to search Heroes for query {}", query);
-        return StreamSupport
-            .stream(heroSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+    public ResponseEntity<List<Hero>> searchHeroes(@RequestParam String query, Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
+        log.debug("REST request to search for a page of Heroes for query {}", query);
+        Page<Hero> page = heroSearchRepository.search(queryStringQuery(query), pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
 }
