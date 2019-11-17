@@ -1,0 +1,18 @@
+entity Hero {
+  name String,
+  affilition String,
+  eyeColor String,
+  hairColor String,
+  gender String,
+  status String,
+  year Long,
+  firstAppearance String,
+  universe String,
+  intelligence Long,
+  strength Long,
+  speed Long,
+  durability Long,
+  power Long,
+  combat Long,
+  total Long,
+}

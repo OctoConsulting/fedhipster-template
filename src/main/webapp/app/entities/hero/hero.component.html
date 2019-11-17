@@ -1,0 +1,99 @@
+<div>
+    <h2 id="page-heading">
+        <span>Heroes</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-hero" [routerLink]="['/hero/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span class="hidden-sm-down" >
+            Create new Hero
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="Query">
+                    <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
+                        <fa-icon [icon]="'search'"></fa-icon>
+                    </button>
+                    <button class="input-group-append btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <fa-icon [icon]="'trash-alt'"></fa-icon>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="heroes">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Name</span></th>
+            <th><span>Affilition</span></th>
+            <th><span>Eye Color</span></th>
+            <th><span>Hair Color</span></th>
+            <th><span>Gender</span></th>
+            <th><span>Status</span></th>
+            <th><span>Year</span></th>
+            <th><span>First Appearance</span></th>
+            <th><span>Universe</span></th>
+            <th><span>Intelligence</span></th>
+            <th><span>Strength</span></th>
+            <th><span>Speed</span></th>
+            <th><span>Durability</span></th>
+            <th><span>Power</span></th>
+            <th><span>Combat</span></th>
+            <th><span>Total</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let hero of heroes ;trackBy: trackId">
+                <td><a [routerLink]="['/hero', hero.id, 'view' ]">{{hero.id}}</a></td>
+                <td>{{hero.name}}</td>
+                <td>{{hero.affilition}}</td>
+                <td>{{hero.eyeColor}}</td>
+                <td>{{hero.hairColor}}</td>
+                <td>{{hero.gender}}</td>
+                <td>{{hero.status}}</td>
+                <td>{{hero.year}}</td>
+                <td>{{hero.firstAppearance}}</td>
+                <td>{{hero.universe}}</td>
+                <td>{{hero.intelligence}}</td>
+                <td>{{hero.strength}}</td>
+                <td>{{hero.speed}}</td>
+                <td>{{hero.durability}}</td>
+                <td>{{hero.power}}</td>
+                <td>{{hero.combat}}</td>
+                <td>{{hero.total}}</td>
+                <td class="text-right">
+                    <div class="btn-group">
+                        <button type="submit"
+                                [routerLink]="['/hero', hero.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/hero', hero.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', 'hero', { outlets: { popup: hero.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

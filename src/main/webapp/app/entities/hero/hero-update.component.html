@@ -1,0 +1,104 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-hero-heading">Create or edit a Hero</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!hero.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_name">Name</label>
+                    <input type="text" class="form-control" name="name" id="field_name"
+                           formControlName="name"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_affilition">Affilition</label>
+                    <input type="text" class="form-control" name="affilition" id="field_affilition"
+                           formControlName="affilition"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_eyeColor">Eye Color</label>
+                    <input type="text" class="form-control" name="eyeColor" id="field_eyeColor"
+                           formControlName="eyeColor"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_hairColor">Hair Color</label>
+                    <input type="text" class="form-control" name="hairColor" id="field_hairColor"
+                           formControlName="hairColor"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_gender">Gender</label>
+                    <input type="text" class="form-control" name="gender" id="field_gender"
+                           formControlName="gender"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_status">Status</label>
+                    <input type="text" class="form-control" name="status" id="field_status"
+                           formControlName="status"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_year">Year</label>
+                    <input type="number" class="form-control" name="year" id="field_year"
+                           formControlName="year"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_firstAppearance">First Appearance</label>
+                    <input type="text" class="form-control" name="firstAppearance" id="field_firstAppearance"
+                           formControlName="firstAppearance"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_universe">Universe</label>
+                    <input type="text" class="form-control" name="universe" id="field_universe"
+                           formControlName="universe"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_intelligence">Intelligence</label>
+                    <input type="number" class="form-control" name="intelligence" id="field_intelligence"
+                           formControlName="intelligence"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_strength">Strength</label>
+                    <input type="number" class="form-control" name="strength" id="field_strength"
+                           formControlName="strength"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_speed">Speed</label>
+                    <input type="number" class="form-control" name="speed" id="field_speed"
+                           formControlName="speed"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_durability">Durability</label>
+                    <input type="number" class="form-control" name="durability" id="field_durability"
+                           formControlName="durability"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_power">Power</label>
+                    <input type="number" class="form-control" name="power" id="field_power"
+                           formControlName="power"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_combat">Combat</label>
+                    <input type="number" class="form-control" name="combat" id="field_combat"
+                           formControlName="combat"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_total">Total</label>
+                    <input type="number" class="form-control" name="total" id="field_total"
+                           formControlName="total"/>
+                </div>
+
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

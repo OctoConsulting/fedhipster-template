@@ -1,0 +1,79 @@
+{
+    "name": "Hero",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "affilition",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "eyeColor",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "hairColor",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "gender",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "year",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "firstAppearance",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "universe",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "intelligence",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "strength",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "speed",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "durability",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "power",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "combat",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "total",
+            "fieldType": "Long"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20191117205956",
+    "entityTableName": "hero",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

@@ -1,0 +1,87 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="hero">
+            <h2><span>Hero</span> {{hero.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Name</span></dt>
+                <dd>
+                    <span>{{hero.name}}</span>
+                </dd>
+                <dt><span>Affilition</span></dt>
+                <dd>
+                    <span>{{hero.affilition}}</span>
+                </dd>
+                <dt><span>Eye Color</span></dt>
+                <dd>
+                    <span>{{hero.eyeColor}}</span>
+                </dd>
+                <dt><span>Hair Color</span></dt>
+                <dd>
+                    <span>{{hero.hairColor}}</span>
+                </dd>
+                <dt><span>Gender</span></dt>
+                <dd>
+                    <span>{{hero.gender}}</span>
+                </dd>
+                <dt><span>Status</span></dt>
+                <dd>
+                    <span>{{hero.status}}</span>
+                </dd>
+                <dt><span>Year</span></dt>
+                <dd>
+                    <span>{{hero.year}}</span>
+                </dd>
+                <dt><span>First Appearance</span></dt>
+                <dd>
+                    <span>{{hero.firstAppearance}}</span>
+                </dd>
+                <dt><span>Universe</span></dt>
+                <dd>
+                    <span>{{hero.universe}}</span>
+                </dd>
+                <dt><span>Intelligence</span></dt>
+                <dd>
+                    <span>{{hero.intelligence}}</span>
+                </dd>
+                <dt><span>Strength</span></dt>
+                <dd>
+                    <span>{{hero.strength}}</span>
+                </dd>
+                <dt><span>Speed</span></dt>
+                <dd>
+                    <span>{{hero.speed}}</span>
+                </dd>
+                <dt><span>Durability</span></dt>
+                <dd>
+                    <span>{{hero.durability}}</span>
+                </dd>
+                <dt><span>Power</span></dt>
+                <dd>
+                    <span>{{hero.power}}</span>
+                </dd>
+                <dt><span>Combat</span></dt>
+                <dd>
+                    <span>{{hero.combat}}</span>
+                </dd>
+                <dt><span>Total</span></dt>
+                <dd>
+                    <span>{{hero.total}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/hero', hero.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
