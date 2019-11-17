@@ -1,4 +1,4 @@
-# FedHipster Base Application
+# Hero Matchups
 
 ## Database configuration
 
