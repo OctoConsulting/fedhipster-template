@@ -1,4 +1,4 @@
-package com.octo.retrospider.e2etest.pages;
+package com.octo.app.e2etest.pages;
 
 import java.util.concurrent.TimeUnit;
 

@@ -1,4 +1,4 @@
-package com.octo.retrospider.e2etest;
+package com.octo.app.e2etest;
 
 import org.junit.runner.RunWith;
 

@@ -1,6 +1,6 @@
-package com.octo.retrospider.e2etest.steps;
+package com.octo.app.e2etest.steps;
 
-import com.octo.retrospider.e2etest.pages.HomePage;
+import com.octo.app.e2etest.pages.HomePage;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
