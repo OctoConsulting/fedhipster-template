@@ -35,6 +35,7 @@ public class AppApp implements InitializingBean {
     public AppApp(Environment env) {
         this.env = env;
     }
+    
 
     /**
      * Initializes app.
