@@ -52,7 +52,7 @@ pipeline {
             docker build -t $APP_NAME:latest -t $APP_NAME:$IMAGE_VERSION src/main/docker/.
           '''
           script {
-            docker.withRegistry('https://$IMAGE_REPO', 'ecr:us-east-1:eks-keys') {
+            docker.withRegistry('https://$IMAGE_REPO', 'ecr:us-east-2:eks-keys') {
               docker.image('$APP_NAME').push('$NAMESPACE-$IMAGE_VERSION')
               docker.image('$APP_NAME').push('$NAMESPACE-latest')
             }

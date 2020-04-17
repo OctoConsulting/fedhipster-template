@@ -22,6 +22,7 @@ The application depends on three external services: a database (postgres), an au
 docker-compose -f src/main/docker/keycloak.yml up
 docker-compose -f src/main/docker/postgresql.yml up
 docker-compose -f src/main/docker/jhipster-registry.yml up
+docker-compose -f src/main/docker/elasticsearch.yml up
 ```
 
 If you chose to use a locally running database you can skip running the postgres container
