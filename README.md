@@ -11,21 +11,20 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:postgresql://localhost:5432/app
     username: app
-    password:
+    password: <password>
 ```
 
 ## Dependencies
 
-The application depends on three external services: a database (postgres), an authentication server (Keycloak), and a registry (using Netflix Zuul).
+The application depends on four external services: a database (postgres), an authentication server (Keycloak), a search server (elasticsearch) and a registry (using Netflix Zuul).
+
+Bring up the dependent containers using this script:
 
 ```
-docker-compose -f src/main/docker/keycloak.yml up
-docker-compose -f src/main/docker/postgresql.yml up
-docker-compose -f src/main/docker/jhipster-registry.yml up
-docker-compose -f src/main/docker/elasticsearch.yml up
+./dependencies-up.sh
 ```
 
-If you chose to use a locally running database you can skip running the postgres container
+If you chose to use a locally running database you can skip running the postgres container.
 
 ## Running the application
 
@@ -41,7 +40,7 @@ Run the following commands to run microservice and serve the static front end co
 
 ### Packaging as jar
 
-To build the final jar and optimize the comet application for production, run:
+To build the final jar and optimize the application for production, run:
 
     ./mvnw -Pprod clean verify
 
