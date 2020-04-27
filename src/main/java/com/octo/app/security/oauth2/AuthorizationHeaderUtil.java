@@ -10,8 +10,6 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
 @Component
 public class AuthorizationHeaderUtil {
 
@@ -24,9 +22,8 @@ public class AuthorizationHeaderUtil {
     public Optional<String> getAuthorizationHeader() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
-        OAuth2AuthorizedClient client = clientService.loadAuthorizedClient(
-            oauthToken.getAuthorizedClientRegistrationId(),
-            oauthToken.getName());
+        OAuth2AuthorizedClient client = clientService
+                .loadAuthorizedClient(oauthToken.getAuthorizedClientRegistrationId(), oauthToken.getName());
 
         OAuth2AccessToken accessToken = client.getAccessToken();
 

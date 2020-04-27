@@ -1,10 +1,16 @@
 package com.octo.app.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 import com.octo.app.AppApp;
 import com.octo.app.config.Constants;
 import com.octo.app.config.TestSecurityConfiguration;
 import com.octo.app.domain.User;
-import com.octo.app.repository.search.UserSearchRepository;
 import com.octo.app.repository.UserRepository;
 import com.octo.app.security.AuthoritiesConstants;
 import com.octo.app.service.dto.UserDTO;
@@ -23,19 +29,10 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
 /**
  * Integration tests for {@link UserService}.
  */
-@SpringBootTest(classes = {AppApp.class, TestSecurityConfiguration.class})
+@SpringBootTest(classes = { AppApp.class, TestSecurityConfiguration.class })
 @Transactional
 public class UserServiceIT {
 
@@ -56,14 +53,6 @@ public class UserServiceIT {
 
     @Autowired
     private UserService userService;
-
-    /**
-     * This repository is mocked in the com.octo.app.repository.search test package.
-     *
-     * @see com.octo.app.repository.search.UserSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private UserSearchRepository mockUserSearchRepository;
 
     private User user;
 
@@ -99,10 +88,8 @@ public class UserServiceIT {
         final PageRequest pageable = PageRequest.of(0, (int) userRepository.count());
         final Page<UserDTO> allManagedUsers = userService.getAllManagedUsers(pageable);
         assertThat(allManagedUsers.getContent().stream()
-            .noneMatch(user -> Constants.ANONYMOUS_USER.equals(user.getLogin())))
-            .isTrue();
+                .noneMatch(user -> Constants.ANONYMOUS_USER.equals(user.getLogin()))).isTrue();
     }
-
 
     @Test
     @Transactional
@@ -177,8 +164,10 @@ public class UserServiceIT {
     }
 
     private OAuth2AuthenticationToken createMockOAuth2AuthenticationToken(Map<String, Object> userDetails) {
-        Collection<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(AuthoritiesConstants.ANONYMOUS));
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(Constants.ANONYMOUS_USER, Constants.ANONYMOUS_USER, authorities);
+        Collection<GrantedAuthority> authorities = Collections
+                .singletonList(new SimpleGrantedAuthority(AuthoritiesConstants.ANONYMOUS));
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+                Constants.ANONYMOUS_USER, Constants.ANONYMOUS_USER, authorities);
         usernamePasswordAuthenticationToken.setDetails(userDetails);
         OAuth2User user = new DefaultOAuth2User(authorities, userDetails, "sub");
 

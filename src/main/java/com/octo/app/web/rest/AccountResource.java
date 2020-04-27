@@ -1,5 +1,9 @@
 package com.octo.app.web.rest;
 
+import java.security.Principal;
+
+import javax.servlet.http.HttpServletRequest;
+
 import com.octo.app.service.UserService;
 import com.octo.app.service.dto.UserDTO;
 
@@ -10,9 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
-
 /**
  * REST controller for managing the current user's account.
  */
@@ -21,6 +22,11 @@ import java.security.Principal;
 public class AccountResource {
 
     private static class AccountResourceException extends RuntimeException {
+        /**
+         *
+         */
+        private static final long serialVersionUID = 1L;
+
         private AccountResourceException(String message) {
             super(message);
         }
@@ -35,7 +41,8 @@ public class AccountResource {
     }
 
     /**
-     * {@code GET  /authenticate} : check if the user is authenticated, and return its login.
+     * {@code GET  /authenticate} : check if the user is authenticated, and return
+     * its login.
      *
      * @param request the HTTP request.
      * @return the login if the user is authenticated.
@@ -49,12 +56,13 @@ public class AccountResource {
     /**
      * {@code GET  /account} : get the current user.
      *
-     * @param principal the current user; resolves to {@code null} if not authenticated.
+     * @param principal the current user; resolves to {@code null} if not
+     *                  authenticated.
      * @return the current user.
-     * @throws AccountResourceException {@code 500 (Internal Server Error)} if the user couldn't be returned.
+     * @throws AccountResourceException {@code 500 (Internal Server Error)} if the
+     *                                  user couldn't be returned.
      */
     @GetMapping("/account")
-    @SuppressWarnings("unchecked")
     public UserDTO getAccount(Principal principal) {
         if (principal instanceof OAuth2AuthenticationToken) {
             return userService.getUserFromAuthentication((OAuth2AuthenticationToken) principal);

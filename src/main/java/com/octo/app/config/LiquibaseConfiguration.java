@@ -1,8 +1,9 @@
 package com.octo.app.config;
 
-import io.github.jhipster.config.JHipsterConstants;
-import io.github.jhipster.config.liquibase.AsyncSpringLiquibase;
-import liquibase.integration.spring.SpringLiquibase;
+import java.util.concurrent.Executor;
+
+import javax.sql.DataSource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,8 +14,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
 
-import javax.sql.DataSource;
-import java.util.concurrent.Executor;
+import io.github.jhipster.config.JHipsterConstants;
+import io.github.jhipster.config.liquibase.AsyncSpringLiquibase;
+import liquibase.integration.spring.SpringLiquibase;
 
 @Configuration
 public class LiquibaseConfiguration {
@@ -23,18 +25,19 @@ public class LiquibaseConfiguration {
 
     private final Environment env;
 
-    private final CacheManager cacheManager;
+    // private final CacheManager cacheManager;
 
     public LiquibaseConfiguration(Environment env, CacheManager cacheManager) {
         this.env = env;
-        this.cacheManager = cacheManager;
+        // this.cacheManager = cacheManager;
     }
 
     @Bean
-    public SpringLiquibase liquibase(@Qualifier("taskExecutor") Executor executor,
-            DataSource dataSource, LiquibaseProperties liquibaseProperties) {
+    public SpringLiquibase liquibase(@Qualifier("taskExecutor") Executor executor, DataSource dataSource,
+            LiquibaseProperties liquibaseProperties) {
 
-        // Use liquibase.integration.spring.SpringLiquibase if you don't want Liquibase to start asynchronously
+        // Use liquibase.integration.spring.SpringLiquibase if you don't want Liquibase
+        // to start asynchronously
         SpringLiquibase liquibase = new AsyncSpringLiquibase(executor, env);
         liquibase.setDataSource(dataSource);
         liquibase.setChangeLog("classpath:config/liquibase/master.xml");

@@ -1,5 +1,21 @@
 package com.octo.app.web.rest;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasItems;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.time.Instant;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
+
+import javax.persistence.EntityManager;
+
 import com.octo.app.AppApp;
 import com.octo.app.config.TestSecurityConfiguration;
 import com.octo.app.domain.Authority;
@@ -7,11 +23,11 @@ import com.octo.app.domain.User;
 import com.octo.app.repository.UserRepository;
 import com.octo.app.repository.search.UserSearchRepository;
 import com.octo.app.security.AuthoritiesConstants;
-
 import com.octo.app.service.UserService;
 import com.octo.app.service.dto.UserDTO;
 import com.octo.app.service.mapper.UserMapper;
 import com.octo.app.web.rest.errors.ExceptionTranslator;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,27 +41,17 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.util.*;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 /**
  * Integration tests for the {@link UserResource} REST controller.
  */
-@SpringBootTest(classes = {AppApp.class, TestSecurityConfiguration.class})
+@SpringBootTest(classes = { AppApp.class, TestSecurityConfiguration.class })
 public class UserResourceIT {
 
     private static final String DEFAULT_LOGIN = "johndoe";
 
     private static final String DEFAULT_ID = "id1";
 
-    private static final String DEFAULT_PASSWORD = "passjohndoe";
+    // private static final String DEFAULT_PASSWORD = "passjohndoe";
 
     private static final String DEFAULT_EMAIL = "johndoe@localhost";
 
@@ -100,17 +106,15 @@ public class UserResourceIT {
         UserResource userResource = new UserResource(userService, mockUserSearchRepository);
 
         this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setMessageConverters(jacksonMessageConverter)
-            .build();
+                .setCustomArgumentResolvers(pageableArgumentResolver).setControllerAdvice(exceptionTranslator)
+                .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
      * Create a User.
      *
-     * This is a static method, as tests for other entities might also need it,
-     * if they test an entity which has a required relationship to the User entity.
+     * This is a static method, as tests for other entities might also need it, if
+     * they test an entity which has a required relationship to the User entity.
      */
     public static User createEntity(EntityManager em) {
         User user = new User();
@@ -140,16 +144,14 @@ public class UserResourceIT {
         mockUserSearchRepository.save(user);
 
         // Get all the users
-        restUserMockMvc.perform(get("/api/users?sort=id,desc")
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].login").value(hasItem(DEFAULT_LOGIN)))
-            .andExpect(jsonPath("$.[*].firstName").value(hasItem(DEFAULT_FIRSTNAME)))
-            .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LASTNAME)))
-            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
-            .andExpect(jsonPath("$.[*].imageUrl").value(hasItem(DEFAULT_IMAGEURL)))
-            .andExpect(jsonPath("$.[*].langKey").value(hasItem(DEFAULT_LANGKEY)));
+        restUserMockMvc.perform(get("/api/users?sort=id,desc").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(jsonPath("$.[*].login").value(hasItem(DEFAULT_LOGIN)))
+                .andExpect(jsonPath("$.[*].firstName").value(hasItem(DEFAULT_FIRSTNAME)))
+                .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LASTNAME)))
+                .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
+                .andExpect(jsonPath("$.[*].imageUrl").value(hasItem(DEFAULT_IMAGEURL)))
+                .andExpect(jsonPath("$.[*].langKey").value(hasItem(DEFAULT_LANGKEY)));
     }
 
     @Test
@@ -162,15 +164,14 @@ public class UserResourceIT {
         assertThat(cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).get(user.getLogin())).isNull();
 
         // Get the user
-        restUserMockMvc.perform(get("/api/users/{login}", user.getLogin()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.login").value(user.getLogin()))
-            .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRSTNAME))
-            .andExpect(jsonPath("$.lastName").value(DEFAULT_LASTNAME))
-            .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL))
-            .andExpect(jsonPath("$.imageUrl").value(DEFAULT_IMAGEURL))
-            .andExpect(jsonPath("$.langKey").value(DEFAULT_LANGKEY));
+        restUserMockMvc.perform(get("/api/users/{login}", user.getLogin())).andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(jsonPath("$.login").value(user.getLogin()))
+                .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRSTNAME))
+                .andExpect(jsonPath("$.lastName").value(DEFAULT_LASTNAME))
+                .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL))
+                .andExpect(jsonPath("$.imageUrl").value(DEFAULT_IMAGEURL))
+                .andExpect(jsonPath("$.langKey").value(DEFAULT_LANGKEY));
 
         assertThat(cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).get(user.getLogin())).isNotNull();
     }
@@ -178,20 +179,18 @@ public class UserResourceIT {
     @Test
     @Transactional
     public void getNonExistingUser() throws Exception {
-        restUserMockMvc.perform(get("/api/users/unknown"))
-            .andExpect(status().isNotFound());
+        restUserMockMvc.perform(get("/api/users/unknown")).andExpect(status().isNotFound());
     }
 
     @Test
     @Transactional
     public void getAllAuthorities() throws Exception {
-        restUserMockMvc.perform(get("/api/users/authorities")
-            .accept(TestUtil.APPLICATION_JSON_UTF8)
-            .contentType(TestUtil.APPLICATION_JSON_UTF8))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$").isArray())
-            .andExpect(jsonPath("$").value(hasItems(AuthoritiesConstants.USER, AuthoritiesConstants.ADMIN)));
+        restUserMockMvc
+                .perform(get("/api/users/authorities").accept(TestUtil.APPLICATION_JSON_UTF8)
+                        .contentType(TestUtil.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$").value(hasItems(AuthoritiesConstants.USER, AuthoritiesConstants.ADMIN)));
     }
 
     @Test
